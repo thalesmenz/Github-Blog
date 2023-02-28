@@ -9,7 +9,7 @@ import { ContainerAll } from "./styles";
 export function Post() {
 
     let {id} = useParams()
-
+    
     return (
         <ContainerAll>
             <PostTitle id={id ? Number.parseInt(id) : 0 }/>

@@ -1,37 +1,46 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { api } from "../lib/axios";
+import { PostsInfos } from "./PostsInfosContext";
 
 interface SearchPostContextType {
     Search: () => void,
-    setValueSearch: (value: string) => void,
-    valueSearch: string
+    setValueSearch: (value: valueSearchType) => void,
 }
 
 interface SearchContextProps {
     children: ReactNode
 }
 
+interface valueSearchType {
+    postContent: string
+}
+
 export const SearchPostContext = createContext({} as SearchPostContextType) 
 
 export function SearchContext({children}: SearchContextProps ) {
 
-    const [valueSearch, setValueSearch] = useState<string>('')
+    const {setPosts} = useContext(PostsInfos)
+
+    const [valueSearch, setValueSearch] = useState<valueSearchType>({
+        postContent: "   "
+    })
 
     useEffect(() => {
-        if(valueSearch != '') {
+        if(valueSearch.postContent !== "   ") {
             Search()
         }
 
     }, [valueSearch])
 
     async function Search() {
-        const response = await api.get(`/search/issues?q=${valueSearch}%20repo:thalesmenz/Github-Blog`)
+        const response = await api.get(`/search/issues?q=${valueSearch.postContent}%20repo:thalesmenz/Github-Blog`)
 
-        console.log(response.data)
+        setPosts(response.data.items)
+        console.log(response.data.items)
     }
 
     return (
-        <SearchPostContext.Provider value={{Search, setValueSearch, valueSearch}}>
+        <SearchPostContext.Provider value={{Search, setValueSearch}}>
             {children}
         </SearchPostContext.Provider>
     )

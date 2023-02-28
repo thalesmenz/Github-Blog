@@ -7,6 +7,7 @@ interface PostsInfosProps {
 
 interface PostsInfosTypes {
     Posts: PostsTypes[]
+    setPosts: (value: PostsTypes[]) => void
 }
 
 interface PostsTypes {
@@ -27,11 +28,11 @@ export function PostsInfosContext({children}: PostsInfosProps ) {
     async function GetPosts() {
         const response = await api.get('/repos/thalesmenz/Github-Blog/issues')
 
-        setPosts( response.data)
+        setPosts(response.data)
     }
 
     return (
-        <PostsInfos.Provider value={{Posts}}>
+        <PostsInfos.Provider value={{Posts, setPosts}}>
             {children}
         </PostsInfos.Provider>
     )
