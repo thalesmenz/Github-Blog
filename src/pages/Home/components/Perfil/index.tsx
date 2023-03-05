@@ -2,7 +2,6 @@ import { ContainerInfo, ContainerPerfil, ContainerTitle, FooterInHeader } from "
 import { useContext } from "react";
 import { ArrowSquareOut, UserCircle, Users } from 'phosphor-react'
 import { ProfileContext } from "../../../../contexts/InfosProfileContext";
-import { PostsInfos } from "../../../../contexts/PostsInfosContext";
 
 export function Perfil() {
 

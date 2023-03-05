@@ -13,6 +13,9 @@ interface PostsInfosTypes {
 interface PostsTypes {
     title: string,
     body: string,
+    updated_at: Date
+    html_url: string
+    comments: number
 }
 
 export const PostsInfos = createContext({} as PostsInfosTypes)

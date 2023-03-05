@@ -1,27 +1,30 @@
-
 import { useContext } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { PostsInfos } from "../../../../contexts/PostsInfosContext";
-import { ContainerIssue, Parag } from "./styles";
+import { DateFormatter } from "../../../../utils/Formatter";
+import { ContainerIssue, Parag, StyledNavLink } from "./styles";
+
 
 export function ContainerIssues() {
 
     const {Posts} = useContext(PostsInfos)
 
+    console.log(Posts)
+
     return (
         <>
-        {Posts.map(Post => {
+        {Posts.map((Post, index) => {
             return (
-                <div key={Post.title}>
-                    <NavLink to={`/post/1`} >
+                <div key={index}>
+                    <StyledNavLink to={`/post/${index}`} >
                         <ContainerIssue>
                             <div>
                                 <h1>{Post.title}</h1>
-                                <p>Há 1 dia</p>
+                                <p>{DateFormatter.format(new Date(Post.updated_at))}</p>
                             </div>
                         <Parag>{Post.body}</Parag>
                     </ContainerIssue> 
-                 </NavLink>
+                 </StyledNavLink>
                 </div>
             )
         })}
